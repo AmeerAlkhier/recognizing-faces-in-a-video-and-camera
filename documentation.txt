@@ -1,0 +1,26 @@
+Overview:
+First I created a virtual environment for the project and installed Open_CV and Pillow using pip install.
+I used the Haar cascade classifier specifically the version “alt2” and copied it to the project folder.
+This version gave slightly better results than the default one for me . Both gave bad results when the face is tilted or when the face is turned a little to the side. 
+I captured video frames and tested the detection on my laptop camera and then implemented it to detect faces in a video on my device. 
+After that I extracted the faces and got the coordinates for the region of interest so I can draw a bounding  box ( rectangle ) and put the text after recognizing the face. 
+For recognition we can use a deep learning method (using Keras for example )but I opted for simpler way using a recognizer provided from the open CV library . It doesn’t work perfectly but it is sufficient for this particular task. The classifier has the potential to classify more these two persons.
+
+The training data (faces-train.py):
+I chose the images carefully to be similar in size and have the frontal view of the face almost perfectly. 
+The characters I used are : 
+Bill Nye which is an American mechanical engineer, science communicator, and television presenter.
+Tucker Carlson which is an American television host and political commentator on Fox News .
+Each is in their separate file named as their ‘label’ the images themselves have numbers for name.
+I used os.walk to walk through the directory and add the files that end with .png to a list to be the training data. Then I grabbed the name of the folder for the files in that folder and turned the images into a numpy array. 
+I added the ids into a dictionary while walking through these pictures and pickled the labels ,Finally I saved the training results as “ trainer.yml” to be used later ( alongside with the pickled labels) in the other script that runs the detection and recognition.
+
+
+The detection and recognition (faces_detection_and_recognition.py) :
+I imported the pickled file ( the labels dictionary) and loaded the trained model.
+The recognizer outputs two values : the confidence and the label ,since I only have two faces to detect I set it to output results to a pretty low confidence (50 %) and it works fine ! Adding more faces will produce worse results for sure and we will have to raise the confidence level before outputting the results. 
+
+
+ (faces_detection_and_recognition_cam.py) : 
+I used the camera here and raised the confidence level to 80 % so it won’t think I am one of the trained persons. I included a test videos for both.
+Here’s a link to all the files I used if you want to replicate the project plus video demonstrations for both: 
